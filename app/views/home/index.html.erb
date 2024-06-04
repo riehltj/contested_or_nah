@@ -1,0 +1,14 @@
+<section>
+  <h1>Contested or Nah TFT</h1>
+
+  <div class="flex flex-col gap-4">
+    <%= render partial: 'comp_row', collection: @comps, as: :comp %>
+    <div class="flex items-center gap-2">
+      <%= text_field_tag :name, '' %>
+      <% 4.times do |index| %>
+        <%= label_tag (index + 1) %>
+        <%= check_box_tag (index+1).to_words %>
+      <% end %>
+    </div>
+  </div>
+</section>
