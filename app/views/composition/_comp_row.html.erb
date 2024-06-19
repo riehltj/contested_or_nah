@@ -1,12 +1,22 @@
 <section class="main-row">
   <%= form_with model: comp, url: composition_path(comp), method: :patch, data: { controller: 'form', form_target: 'form' } do |form| %>
     <div class="flex items-center gap-2">
+      <%= comp.champions.inspect %>
+      <div class="w-20 aspect-square overflow-hidden mr-4">
+        <%# <%= image_tag comp.champions.first.image_url, class: 'border border-white border-solid w-20 aspect-square object-right rounded-full', style: 'object-fit: cover;' %> %>
+      </div>
       <%= form.text_field :name, value: comp.name, class: 'main-input', data: { action: 'change->form#submit' } %>
 
       <% 4.times do |index| %>
         <%= label_tag (index + 1) %>
         <%= check_box_tag (index+1).to_words %>
       <% end %>
+      <div class="ml-4 flex gap-4">
+        <% comp.items.each do |item| %>
+          <%= image_tag item.image_url, class: 'w-20 aspect-square rounded-lg border border-yellow-400 border-solid', style: 'object-fit: cover;' %>
+        <% end %>
+      </div>
+
     </div>
   <% end %>
 </section>

@@ -1,6 +1,10 @@
 class  CompositionController < ApplicationController
   def index
-    @comps = Composition.all
+    if user_signed_in?
+      @comps = Composition.where(user_id: current_user.id)
+    else
+      @comps =  CuratedComposition.all
+    end
   end
 
   def update

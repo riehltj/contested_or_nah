@@ -4,6 +4,7 @@ namespace :fetch_data do
   task fetch: :environment do
     require 'httparty'
 
+
     version = '14.12.1'
     # Fetch items
     items_url = "https://ddragon.leagueoflegends.com/cdn/#{version}/data/en_US/tft-item.json"
@@ -20,6 +21,23 @@ namespace :fetch_data do
     else
       puts "Failed to fetch items. HTTP Status Code: #{items_response.code}"
     end
+
+
+    # Fetch Augments and add them to items..
+    augments_url = "https://ddragon.leagueoflegends.com/cdn/#{version}/data/en_US/tft-augments.json"
+    augments_response = HTTParty.get(augments_url)
+
+    if augments_response.code == 200
+      augments = JSON.parse(augments_response.body)['data']
+      augments.each do |_key, augment_data|
+        Item.find_or_create_by(name: augment_data['name']) do |item|
+          item.image_url = "https://ddragon.leagueoflegends.com/cdn/#{version}/img/tft-augment/#{augment_data['image']['full']}"
+        end
+      end
+      puts 'Augments fetched and stored successfully.'
+  else
+    puts "Failed to fetch augments. HTTP Status Code: #{augments_response.code}"
+  end
 
     # Fetch champions
     champions_url = "https://ddragon.leagueoflegends.com/cdn/#{version}/data/en_US/tft-champion.json"
@@ -39,7 +57,7 @@ namespace :fetch_data do
 
     # Create curated comps
     comps = [
-      { name: 'Ethereal Blades Shen', items: ['Blue Buff'], champions: ['Shen'] },
+      { name: 'Ethereal Blades Shen', items: ['Ethereal Blades'], champions: ['Shen'] },
       { name: 'Dryad Syndra', items: ['Blue Buff'], champions: ['Syndra'] }
     ]
     CuratedComposition.destroy_all
@@ -48,17 +66,28 @@ namespace :fetch_data do
     comps.each do |comp_data|
       curated_comp = CuratedComposition.find_or_create_by(name: comp_data[:name])
       puts "Creating curated composition: #{curated_comp.name}"
+
       if comp_data[:items].present?
         comp_data[:items].each do |item_name|
           curated_comp.items << Item.find_by(name: item_name)
-        end
-
-        if comp_data[:champions].present?
-          comp_data[:champions].each do |champion_name|
-            curated_comp.champions << Champion.find_by(name: champion_name)
+          if !curated_comp.save
+            puts curated_comp.errors.full_messages
           end
         end
       end
-    end
+
+        if comp_data[:champions].present?
+          comp_data[:champions].each do |champion_name|
+            champion = Champion.find_by(name: champion_name)
+            if champion.nil?
+              puts "No Champion found with name: #{champion_name}"
+            else
+              curated_comp.champions << champion
+              if !curated_comp.save
+                puts "Failed to save CuratedComposition: #{curated_comp.errors.full_messages.join(", ")}"
+              end
+            end
+          end
+      end
   end
 end
