@@ -18,7 +18,7 @@ class  CompositionController < ApplicationController
   end
 
   def destroy
-    
+
   end
 
   private

@@ -20,7 +20,6 @@ namespace :fetch_data do
       puts "Failed to fetch items. HTTP Status Code: #{items_response.code}"
     end
 
-
     # Fetch Augments and add them to items..
     augments_url = "https://ddragon.leagueoflegends.com/cdn/#{version}/data/en_US/tft-augments.json"
     augments_response = HTTParty.get(augments_url)
@@ -33,9 +32,9 @@ namespace :fetch_data do
         end
       end
       puts 'Augments fetched and stored successfully.'
-  else
-    puts "Failed to fetch augments. HTTP Status Code: #{augments_response.code}"
-  end
+    else
+      puts "Failed to fetch augments. HTTP Status Code: #{augments_response.code}"
+    end
 
     # Fetch champions
     champions_url = "https://ddragon.leagueoflegends.com/cdn/#{version}/data/en_US/tft-champion.json"
