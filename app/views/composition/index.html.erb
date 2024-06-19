@@ -1,0 +1,18 @@
+<section>
+  <nav>
+    <%= link_to 'Sign in', new_user_session_path %>
+  </nav>
+
+  <div class="flex flex-col gap-2">
+    <%= render partial: 'comp_row', collection: @comps, as: :comp %>
+    <div class="main-row">
+      <div class="flex items-center gap-2">
+        <%= text_field_tag :name, '', class: 'main-input' %>
+        <% 4.times do |index| %>
+          <%= label_tag (index + 1) %>
+          <%= check_box_tag (index+1).to_words %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

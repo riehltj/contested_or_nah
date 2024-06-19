@@ -1,9 +1,0 @@
-<section class="flex flex-col gap-4">
-  <div class="flex items-center gap-2">
-    <%= text_field_tag :name, comp.name %>
-    <% 4.times do |index| %>
-      <%= label_tag (index + 1) %>
-      <%= check_box_tag (index+1).to_words %>
-    <% end %>
-  </div>
-</section>

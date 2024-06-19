@@ -1,0 +1,12 @@
+<section class="main-row">
+  <%= form_with model: comp, url: composition_path(comp), method: :patch, data: { controller: 'form', form_target: 'form' } do |form| %>
+    <div class="flex items-center gap-2">
+      <%= form.text_field :name, value: comp.name, class: 'main-input', data: { action: 'change->form#submit' } %>
+
+      <% 4.times do |index| %>
+        <%= label_tag (index + 1) %>
+        <%= check_box_tag (index+1).to_words %>
+      <% end %>
+    </div>
+  <% end %>
+</section>

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :users
   # Defines the root path route ("/")
-  root "home#index"
+  root "composition#index"
+
+  resources :composition, except: [:show]
 end

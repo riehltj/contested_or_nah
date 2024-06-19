@@ -46,6 +46,8 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 
 gem 'numbers_and_words', '~> 0.11.12'
+gem 'devise', '~> 4.9.2'
+gem 'httparty'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

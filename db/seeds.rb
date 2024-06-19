@@ -6,7 +6,12 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+User.destroy_all
 Composition.destroy_all
+
+test_user = User.create(email: "jdoe@gmail.com", password: "password", password_confirmation: "password")
+
+
 compositions = [
   "Dryad Syndra",
   "Sage Lillia",
@@ -19,7 +24,9 @@ compositions = [
   "Trickshot Kai'Sa"
 ]
 
+print 'Creating compositions'
 
 compositions.each do |comp|
-  Composition.create(name: comp)
+  print '.'
+  Composition.create(name: comp, user_id: test_user.id)
 end
