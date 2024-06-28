@@ -1,6 +1,6 @@
 class CuratedComposition < ApplicationRecord
-  has_and_belongs_to_many :items
-  has_and_belongs_to_many :champions
+  has_many :items, dependent: :nullify
+  has_many :champions, dependent: :nullify
 
   validates :name, presence: true, uniqueness: true
 end

@@ -1,0 +1,15 @@
+<section class="flex flex-col gap-4">
+  <%= link_to '<- Back to All Comps', admin_compositions_path, class:'btn btn-blue w-fit' %>
+  <h1 class="text-white text-xl"><%= @composition.name %></h1>
+
+  <%= render 'composition/comp_row', comp: @composition %>
+  <%= form_with model: @composition, url: admin_composition_path(@composition), method: :patch, class: 'flex flex-col gap-2' do |form| %>
+    <%= form.select 'champion_id', options_from_collection_for_select(Champion.all.order(:name), 'id', 'name', @composition.champions&.first&.id), include_blank: 'No Champion Selected' %>
+    <%= form.label 'item_id_1', 'Select an Item' %>
+    <%= form.select 'item_id_1', options_from_collection_for_select(Item.all.order(:name), 'id', 'name', @composition.items.first.id) %>
+    <%= form.label 'item_id_2', 'Select an Item' %>
+    <%= form.select 'item_id_2', options_from_collection_for_select(Item.all.order(:name), 'id', 'name', @composition.items.second&.id), include_blank: 'No Item Selected' %>
+
+    <%= form.submit 'Update Comp', class: 'btn btn-primary' %>
+  <% end %>
+</section>

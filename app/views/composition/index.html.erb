@@ -1,20 +1,14 @@
-<section>
-  <nav>
-    <%= link_to 'Sign in', new_user_session_path %>
+<section class="w-full">
+  <nav class="flex justify-between w-full mb-4">
+    <h1 class="text-2xl text-white">ContestedOrNah</h1>
+    <% if user_signed_in? %>
+      <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-primary' %>
+    <% else %>
+      <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-primary' %>
+    <% end %>
   </nav>
 
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-0 w-fit">
     <%= render partial: 'comp_row', collection: @comps, as: :comp %>
-    <% if user_signed_in? %>
-      <div class="main-row">
-        <div class="flex items-center gap-2">
-          <%= text_field_tag :name, '', class: 'main-input' %>
-          <% 4.times do |index| %>
-            <%= label_tag (index + 1) %>
-            <%= check_box_tag (index+1).to_words %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
   </div>
 </section>

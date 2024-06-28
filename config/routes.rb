@@ -4,4 +4,10 @@ Rails.application.routes.draw do
   root "composition#index"
 
   resources :composition, except: [:show]
+
+  get '/admin', to: 'admin#index'
+
+  namespace :admin do
+    resources :compositions
+  end
 end

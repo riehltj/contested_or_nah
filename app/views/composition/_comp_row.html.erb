@@ -1,23 +1,25 @@
-<section class="main-row">
-  <%= form_with model: comp, url: composition_path(comp), method: :patch, data: { controller: 'form', form_target: 'form' } do |form| %>
-    <div class="flex items-center gap-2">
-      <div class="w-20 aspect-square overflow-hidden mr-4">
-        <% comp.champions.each do |img| %>
-          <%= image_tag img.image_url, class: 'border border-white border-solid w-20 aspect-square object-fit object-right rounded-full' %>
-        <% end %>
-
-      </div>
-      <%= form.text_field :name, value: comp.name, class: 'main-input', data: { action: 'change->form#submit' } %>
-
-      <% 4.times do |index| %>
-        <%= label_tag (index + 1) %>
-        <%= check_box_tag (index+1).to_words %>
-      <% end %>
-      <div class="ml-4 flex gap-4">
-        <% comp.items.each do |item| %>
-          <%= image_tag item.image_url, class: 'w-20 aspect-square rounded-lg border border-yellow-400 border-solid object-fit' %>
-        <% end %>
-      </div>
-    </div>
+  <%= form_with model: comp, url: current_user&.admin? ? admin_composition_path(comp) : composition_path(comp), method: :patch, class: 'main-row', data: { controller: 'form', form_target: 'form' } do |form| %>
+  <% comp.champions.each do |img| %>
+    <%= image_tag img.image_url, class: 'border border-white border-solid min-w-10 w-10 aspect-square object-fit object-right rounded-full' %>
   <% end %>
-</section>
+
+  <%= form.text_field :name, value: comp.name, class: 'main-input', data: { action: 'change->form#submit' } %>
+
+  <label for="<%= comp.id %>" class="flex items-center cursor-pointer select-none">
+    <div class="relative">
+      <input type="checkbox" id="<%= comp.id %>" class="peer sr-only"/>
+      <div class="block h-8 rounded-full bg-gray-300 w-14"></div>
+      <div class="absolute w-6 h-6 transition bg-green-800 rounded-full dot left-1 top-1 peer-checked:translate-x-full peer-checked:bg-red-600"></div>
+    </div>
+  </label>
+
+  <div class="ml-4 flex gap-4">
+    <% comp.items.each do |item| %>
+      <%= image_tag item.image_url, class: 'min-w-10 w-10 aspect-square rounded-lg border border-yellow-400 border-solid object-fit' %>
+    <% end %>
+  </div>
+
+  <% if current_user&.admin? %>
+    <%= link_to 'EDIT', edit_admin_composition_path(comp) %>
+  <% end %>
+<% end %>

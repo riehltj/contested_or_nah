@@ -1,0 +1,7 @@
+<section class="flex flex-col gap-2">
+  <h1 class="text-2xl text-white">Admin Dashboard</h1>
+  <%= link_to "Back", root_path, class:'btn btn-blue' %>
+  <section class="flex flex-col">
+    <%= render partial: 'composition/comp_row', collection: @curated_compositions, as: :comp %>
+  </section>
+</section>

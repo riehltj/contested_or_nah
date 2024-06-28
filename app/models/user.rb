@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :compositions
+
+  def admin?
+    self.admin
+  end
 end

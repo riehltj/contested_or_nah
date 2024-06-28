@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_19_182249) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_19_212650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_19_182249) do
     t.string "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "curated_composition_id"
+    t.index ["curated_composition_id"], name: "index_champions_on_curated_composition_id"
   end
 
   create_table "champions_curated_compositions", id: false, force: :cascade do |t|
@@ -56,6 +58,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_19_182249) do
     t.string "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "curated_composition_id"
+    t.index ["curated_composition_id"], name: "index_items_on_curated_composition_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,9 +70,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_19_182249) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "champions", "curated_compositions"
   add_foreign_key "compositions", "users"
+  add_foreign_key "items", "curated_compositions"
 end

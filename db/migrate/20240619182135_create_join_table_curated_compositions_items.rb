@@ -1,4 +1,4 @@
-class CreateJoinTableCuratedCompsItems < ActiveRecord::Migration[7.0]
+class CreateJoinTableCuratedCompositionsItems < ActiveRecord::Migration[7.0]
   def change
     create_table :curated_compositions_items, id: false do |t|
       t.belongs_to :curated_composition

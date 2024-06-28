@@ -1,7 +1,7 @@
 class  CompositionController < ApplicationController
   def index
     if user_signed_in?
-      @comps = Composition.where(user_id: current_user.id)
+      @comps = CuratedComposition.all + Composition.where(user_id: current_user.id)
     else
       @comps =  CuratedComposition.all
     end

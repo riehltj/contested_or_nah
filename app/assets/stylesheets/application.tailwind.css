@@ -4,10 +4,29 @@
 
 @layer components {
   .main-row {
-    @apply border border-blue-500 border-solid rounded-xl px-6 py-2 w-full flex flex-col gap-4 text-white;
+    @apply bg-indigo-950 border border-blue-500 border-solid rounded-xl px-6 py-2 flex justify-between gap-0 sm:gap-12 text-white;
   }
 
   .main-input {
-    @apply bg-blue-950 border border-blue-500 border-solid rounded-xl px-6 py-2 w-full text-white;
+    @apply bg-transparent border border-blue-500 border-solid rounded-xl px-6 py-2 text-white w-full;
+  }
+
+  .btn {
+    @apply font-bold py-2 px-6 rounded;
+  }
+  .btn-blue {
+    @apply bg-blue-500 text-white;
+  }
+
+  .btn-primary {
+    @apply bg-yellow-400 text-black;
+  }
+
+  .btn-blue:hover {
+    @apply bg-blue-700;
+  }
+
+  .btn-primary:hover {
+    @apply bg-yellow-500;
   }
 }
